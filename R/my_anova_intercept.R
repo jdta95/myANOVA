@@ -2,13 +2,16 @@
 #'
 #' Performs an ANOVA analysis on an intercept-only linear regression model.
 #'
+#' @param mod an "lm" object containing an intercept-only linear regression model
+#'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
-#' @export
 #'
 #' @examples
 #' data(mtcars)
 #' mod = lm(mpg ~ 1, data = mtcars)
 #' my_anova_intercept(mod)
+#'
+#' @export
 
 my_anova_intercept = function(mod) {
   n = nrow(mod$model)

@@ -2,14 +2,17 @@
 #'
 #' Perform ANOVA analyses on multiple linear regression models
 #'
+#' @param mods list containing at least 2 objects of type "lm"
+#'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
-#' @export
 #'
 #' @examples
 #' data(mtcars)
 #' mod1 = lm(mpg ~ cyl, data = mtcars)
 #' mod2 = lm(mpg ~ cyl + disp, data = mtcars)
 #' my_anova2(mod1, mod2)
+#'
+#' @export
 
 my_anova2 = function(mods) {
   len = length(mods)
