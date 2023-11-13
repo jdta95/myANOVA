@@ -1,0 +1,123 @@
+---
+title: "Introduction to myANOVA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{myanova_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(myANOVA)
+```
+
+The myANOVA package is designed to perform ANOVA analyses for linear regression models. It primarily does this through the my_anova function. 
+
+* Note although there are other functions in this package, all of them are designed to support the my_anova function and do not need to be called directly.
+
+There are 2 ways to use my_anova. The first way sequentially tests significance of each term in one linear model. The second way compares and tests for significant differences between multiple nested linear models.
+
+Let's start with the first method.
+
+# my_anova for one linear model
+
+Suppose we want to examine the significance of adding each variable to a linear regression model. We can perform this analysis using my_anova.
+
+To use my_anova, we first need to create the linear regression model, which in R would be referred to as an "lm" object.
+
+```{r}
+# Load a dataset
+data(iris)
+
+# Create a linear model
+mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+         data = iris)
+```
+
+Now let's run my_anova with the linear model.
+
+```{r}
+my_anova(mod)
+```
+
+The function produces a table. At the top, we can see the response variable. To understand the rest of the information being provided, let's take a close look at each column.
+
+Df: This column contains the degrees of freedom for each variable. For a continuous numeric variable like Sepal.Width, the degrees of freedom will be 1. For a categorical variable like Species, the degrees of freedom is calculated as the number of categories minus 1. The degrees of freedom for the residuals is the number of observations minus 1 minus the parameters' degrees of freedom.
+
+Sum Sq: This column contains sums of squares. In each row, a linear regression model is run with the row name variable and all variables above it. To calculate the sum of squares, first the squared differences between the fitted values and the outcome mean are summed. Then the sum minus the prior sums of squares gives the sums of squares for the current row.
+
+Mean Sq: This column is the mean sum of squares. It is the sum of squares divided by the degrees of freedom.
+
+F value: This column is the F-statistic. These are calculated as the mean sum of squares for each variable divided by the mean sum of squares for the residuals.
+
+Pr(>F): This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom for each variable, the second is the degrees of freedom for the residuals.
+
+Going back to the original motivating analysis, we can use the p-values to conclude for each variable whether adding it to the previous model resulted in a significant improvement in fit.
+
+* It is important to remember that, when given one linear model, my_anova tests the significance of each variable sequentially. The first row's p-value indicates the significance of adding Sepal.Width to intercept-only linear model, the second row's p-value indicates the significance of adding Petal.Length to a linear model containing the intercept and Sepal.Width, and so on.
+
+# my_anova for multiple linear models
+## Part 1: 2 linear models
+
+The my_anova function can also be used to test the significance of adding multiple variables to a linear model. For example, we might want to know if adding petal variables (petal length and width) to a model with only sepal width significantly improves the fit of the model. To do this, let's create some new linear models.
+
+```{r}
+# Load the dataset
+data(iris)
+
+# Create nested linear models
+mod1 = lm(Sepal.Length ~ Sepal.Width,
+          data = iris)
+mod2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,
+          data = iris)
+```
+
+To test the significance of the petal variables, we need to run my_anova with both models. It is important to note that the order of the models is important. The nested linear models must be entered in ascending order of numbers of parameters. This means the reduced model must be entered first and the full model must be entered last. We can see the resulting output below.
+
+```{r}
+my_anova(mod1, mod2)
+```
+
+Once again, my_anova returns a table. At the top, we can see the formulas for the models that are being compared. To understand the rest of the information, let's take a look at each column.
+
+Res. Df: This column contains the residual degrees of freedom for each model. The residual degrees of freedom is the number of observations minus 1 minus the degrees of freedom of the parameters in the model.
+
+RSS: This column shows the residual sum of squares. For each model, the residuals are squared and then summed to calculate the residual sum of squares
+
+Df: This column shows the degrees of freedom of the hypothesis test comparing each model to the reduced model immediately above it. The degrees of freedom is equal to the residual degrees of freedom of the reduced model minus the residual degrees of freedom of the full model.
+
+Sum of Sq: This column contains sums of squares. These are calculated as the RSS of the reduced model minus the RSS of the full model.
+
+F: This column shows the F-statistics. The F-statistic is the sum of squares value divided by the degrees of freedom of the hypothesis test.
+
+Pr(>F): This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom of the hypothesis test, the second is the residual degrees of freedom for the full model.
+
+Going back to the motivating scientific question, we can see from the my_anova table that the petal variables significantly improved the fit of the model compared to the model with just sepal length.
+
+## Part 2: 3 or more linear models
+
+Suppose we have a full model with sepal width, petal length, petal width, and species. We want to test if adding petal variables to a model with just sepal width significantly improves the model fit. We also want to test if adding species to the model with sepal width and the petal variables significantly improves the model fit. We can test both of these at once using my_anova.
+
+To do this analysis, we need to create one more linear model.
+
+```{r}
+mod3 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+          data = iris)
+```
+
+Now let's run my_anova again providing the models in ascending order of numbers of parameters. This means the reduced model must be entered first and the full model must be entered last. We can see the resulting output below.
+
+```{r}
+my_anova(mod1, mod2, mod3)
+```
+
+Again, my_anova produces the same columns as when my_anova was used to compare 2 models. In addition, we can see the Res.Df, RSS, Df, and Sum of Sq in the first and second rows of the table are identical to what we saw in Part 1. This is because the same 2 models are being used to determine those values. However, the F-statistic and, subsequently, the p-value for Model 2 are different because part of the F-statistic calculation uses the RSS and residual degrees of freedom of the full model, which is now Model 3 instead of Model 2.
+
+Using the my_anova function, we can conclude adding the petal variables to the model with only sepal width significantly improved the fit of the model. In addition, Model 3 which added the species variable showed a significantly better fit compared to Model 2, which just considered sepal width and the petal variables.
