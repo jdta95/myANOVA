@@ -1,3 +1,15 @@
+#' my_anova1
+#'
+#' Performs a sequential ANOVA analysis on one linear regression model.
+#'
+#' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
+#' @export
+#'
+#' @examples
+#' data(mtcars)
+#' mod = lm(mpg ~ cyl + disp, data = mtcars)
+#' my_anova1(mod)
+
 my_anova1 = function(mod) {
   n = nrow(mod$model)
   par = ncol(mod$model) - 1

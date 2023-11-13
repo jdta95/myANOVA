@@ -1,3 +1,16 @@
+#' my_anova2
+#'
+#' Perform ANOVA analyses on multiple linear regression models
+#'
+#' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
+#' @export
+#'
+#' @examples
+#' data(mtcars)
+#' mod1 = lm(mpg ~ cyl, data = mtcars)
+#' mod2 = lm(mpg ~ cyl + disp, data = mtcars)
+#' my_anova2(mod1, mod2)
+
 my_anova2 = function(mods) {
   len = length(mods)
   res_dfs = sapply(mods, function(mod) mod$df.residual)
