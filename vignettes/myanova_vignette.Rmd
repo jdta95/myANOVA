@@ -64,6 +64,7 @@ Going back to the original motivating analysis, we can use the p-values to concl
 
 * It is important to remember that, when given one linear model, my_anova tests the significance of each variable sequentially. The first row's p-value indicates the significance of adding Sepal.Width to intercept-only linear model, the second row's p-value indicates the significance of adding Petal.Length to a linear model containing the intercept and Sepal.Width, and so on.
 
+** The my_anova function is not intended for ANOVA analysis of a single cell-means coded linear model input. After searching online for answers, I could not determine how the anova function calculates sums of squares when given a single cell-means coded linear model.
 
 ## my_anova for multiple linear models
 ### Part 1: my_anova for 2 linear models
