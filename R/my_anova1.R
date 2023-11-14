@@ -6,6 +6,8 @@
 #'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'
+#' For a complete breakdown of the table output, please see the myANOVA vignette.
+#'
 #' @examples
 #' data(iris)
 #' mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
