@@ -1,29 +1,41 @@
-#' my_anova1
-#'
-#' Performs a sequential ANOVA analysis on one linear regression model.
-#'
-#' @param mod an "lm" object with at least one covariate in the linear regression model
-#'
-#' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
-#'
-#' @examples
-#' data(iris)
-#' mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
-#' my_anova1(mod)
-#'
-#' @export
+data(iris)
+mod1 = lm(Sepal.Length ~ Species + Sepal.Width,
+           data = iris)
+blah = lm(Sepal.Length ~ -1 + Species,
+          data = iris)
+mod1b = lm(Sepal.Length ~ -1 + Species + Sepal.Width,
+           data = iris)
+out = anova(mod1b)
 
-my_anova1 = function(mod) {
+mod = mod1b
+
+SST = sum((iris$Sepal.Length - mean(iris$Sepal.Length)) ^ 2)
+SSM = sum((blah$coefficients - mean(iris$Sepal.Length)) ^ 2 * table(iris$Species))
+SSE = SST - SSM
+
+mean(iris$Sepal.Length[iris$Species == "virginica"])
+
+sum(50 * (blah$coefficients - mean(iris$Sepal.Length)) ^ 2)
+
+my_anova1_cellmeans = function(mod) {
   n = nrow(mod$model)
   par = ncol(mod$model) - 1
   Ybar = mean(mod$model[, 1])
   dfs = unname(c(sapply(mod$model[, -1, drop = FALSE], get_dfs), mod$df.residual))
+  index = min(which(sapply(mod$model[, -1, drop = FALSE],
+                           function(col) {
+                             class(col) == "factor" | class(col) == "character"
+                           })))
+  dfs[index] = dfs[index] + 1
+
+
+
   SSs = numeric(par + 1)
-  SSs[1] = sum((lm(mod$model[, 1] ~ mod$model[, 2])$fitted.values - Ybar) ^ 2) - sum(SSs)
+  SSs[1] = sum((lm(mod$model[, 1] ~ -1 + mod$model[, 2])$fitted.values - Ybar) ^ 2) - sum(SSs)
   if (par > 1) {
     for (i in 2:par) {
       pars = 2:i
-      formula_str = paste0("mod$model[, 1] ~ ",
+      formula_str = paste0("mod$model[, 1] ~ -1 + ",
                            paste0("mod$model[, ", 2:(i + 1), collapse = "] + "),
                            "]")
       SSs[i] = sum((lm(as.formula(formula_str))$fitted.values - Ybar) ^ 2) - sum(SSs)

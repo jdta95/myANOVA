@@ -7,9 +7,9 @@
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'
 #' @examples
-#' data(mtcars)
-#' mod1 = lm(mpg ~ cyl, data = mtcars)
-#' mod2 = lm(mpg ~ cyl + disp, data = mtcars)
+#' data(iris)
+#' mod1 = lm(Sepal.Length ~ Sepal.Width, data = iris)
+#' mod2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
 #' my_anova2(mod1, mod2)
 #'
 #' @export

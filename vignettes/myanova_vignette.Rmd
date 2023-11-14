@@ -26,7 +26,8 @@ There are 2 ways to use my_anova. The first way sequentially tests significance 
 
 Let's start with the first method.
 
-# my_anova for one linear model
+
+## my_anova for one linear model
 
 Suppose we want to examine the significance of adding each variable to a linear regression model. We can perform this analysis using my_anova.
 
@@ -63,8 +64,9 @@ Going back to the original motivating analysis, we can use the p-values to concl
 
 * It is important to remember that, when given one linear model, my_anova tests the significance of each variable sequentially. The first row's p-value indicates the significance of adding Sepal.Width to intercept-only linear model, the second row's p-value indicates the significance of adding Petal.Length to a linear model containing the intercept and Sepal.Width, and so on.
 
-# my_anova for multiple linear models
-## Part 1: 2 linear models
+
+## my_anova for multiple linear models
+### Part 1: my_anova for 2 linear models
 
 The my_anova function can also be used to test the significance of adding multiple variables to a linear model. For example, we might want to know if adding petal variables (petal length and width) to a model with only sepal width significantly improves the fit of the model. To do this, let's create some new linear models.
 
@@ -101,7 +103,7 @@ Pr(>F): This column contains the p-values of the F-statistic. Note the F-distrib
 
 Going back to the motivating scientific question, we can see from the my_anova table that the petal variables significantly improved the fit of the model compared to the model with just sepal length.
 
-## Part 2: 3 or more linear models
+### Part 2: my_anova for 3 or more linear models
 
 Suppose we have a full model with sepal width, petal length, petal width, and species. We want to test if adding petal variables to a model with just sepal width significantly improves the model fit. We also want to test if adding species to the model with sepal width and the petal variables significantly improves the model fit. We can test both of these at once using my_anova.
 
