@@ -14,7 +14,8 @@
 #' @export
 
 get_dfs = function(col) {
-  if (class(col) == "factor" | class(col) == "character") {
+  if (is.factor(col) | is.character(col)) {
+#  if (class(col) == "factor" | class(col) == "character") {
     df = length(unique(col)) - 1
   }
   else {

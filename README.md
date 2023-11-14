@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jdta95/myANOVA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jdta95/myANOVA/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/jdta95/myANOVA/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jdta95/myANOVA?branch=master)
 <!-- badges: end -->
 
 The myANOVA package is designed to perform ANOVA analyses on linear regression models. The primary function is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
@@ -21,18 +22,21 @@ devtools::install_github("jdta95/myANOVA")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+There are 2 ways to use my_anova. When given one linear model object, my_anova sequentially tests significance of each term in the model. When given multiple nested linear model objects, my_anova compares and tests for significant differences between models.
 
 ``` r
 library(myANOVA)
-## example code
 
-data(mtcars)
+# sample data
+data(iris)
 
-mod1 = lm(mpg ~ cyl, data = mtcars)
-mod2 = lm(mpg ~ cyl + disp, data = mtcars)
+# linear regression models
+mod1 = lm(Sepal.Length ~ Sepal.Width, data = iris)
+mod2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
 
+# my_anova for a single linear regression model
 my_anova(mod2)
+
+# my_anova for more than 1 linear regression model
 my_anova(mod1, mod2)
 ```
-
