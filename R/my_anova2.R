@@ -10,7 +10,8 @@
 #' data(iris)
 #' mod1 = lm(Sepal.Length ~ Sepal.Width, data = iris)
 #' mod2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
-#' my_anova2(mod1, mod2)
+#' mods = list(mod1, mod2)
+#' my_anova2(mods)
 #'
 #' @export
 
