@@ -20,7 +20,7 @@ my_anova = function(...) {
   if (any(sapply(mods, function(mod) class(mod) != "lm"))) {
     stop("At least one of the objects supplied to my_anova does not have class \"lm\".")
   }
-  if (length(mods) == 1 & (any(grepl(" - 1", mods[[1]]$call)) | any(grepl(" + 0", mods[[1]]$call))))
+  if (length(mods) == 1 & (any(grepl(" -1", mods[[1]]$call)) | any(grepl(" + 0", mods[[1]]$call))))
     stop("A cell-means coded linear model cannot be the only object supplied to my_anova.")
   if (length(mods) > 1) {
     return(my_anova2(mods))
