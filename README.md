@@ -33,7 +33,7 @@ library(myANOVA)
 data(iris)
 
 # linear regression models
-mod1 = lm(Sepal.Length ~ Sepal.Width,data = iris)
+mod1 = lm(Sepal.Length ~ Sepal.Width, data = iris)
 mod2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
 mod3 = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
 

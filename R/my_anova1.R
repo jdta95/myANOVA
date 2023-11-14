@@ -21,7 +21,7 @@ my_anova1 = function(mod) {
   Ybar = mean(mod$model[, 1])
 
   # Use get_dfs on each covariate to get the degrees of freedom (df)
-  dfs = unname(c(sapply(mod$model[,-1, drop = FALSE], get_dfs), mod$df.residual))
+  dfs = unname(c(sapply(mod$model[, -1, drop = FALSE], get_dfs), mod$df.residual))
 
   # Calculate the sums of squares (SS) for each sequential model
   ## SS = sum((Yhat - Ybar) ^ 2) - (previous SS's)
@@ -56,11 +56,13 @@ my_anova1 = function(mod) {
   ps = pf(Fs, dfs[-length(dfs)], dfs[length(dfs)], lower.tail = FALSE)
 
   # Create output
-  ret = list(Df = dfs,
-             `Sum Sq` = SSs,
-             `Mean Sq` = MSSs,
-             `F value` = Fs,
-             `Pr(>F)` = ps)
+  ret = list(
+    Df = dfs,
+    `Sum Sq` = SSs,
+    `Mean Sq` = MSSs,
+    `F value` = Fs,
+    `Pr(>F)` = ps
+  )
   model_names = names(mod$model)
   attributes(ret)$row.names = c(model_names[2:(par + 1)],
                                 "Residuals")

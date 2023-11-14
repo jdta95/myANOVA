@@ -20,12 +20,15 @@
 my_anova = function(...) {
   mods = list(...)
   # Error if any mods are not lm objects
-  if (any(sapply(mods, function(mod) class(mod) != "lm"))) {
+  if (any(sapply(mods, function(mod)
+    class(mod) != "lm"))) {
     stop("At least one of the objects supplied to my_anova does not have class \"lm\".")
   }
 
   # Error if mods contains only one cell-means model
-  if (length(mods) == 1 & (any(grepl(" -1", mods[[1]]$call)) | any(grepl(" + 0", mods[[1]]$call))))
+  if (length(mods) == 1 &
+      (any(grepl(" -1", mods[[1]]$call)) |
+       any(grepl(" + 0", mods[[1]]$call))))
     stop("A cell-means coded linear model cannot be the only object supplied to my_anova.")
 
   # If mods contains multiple models, run my_anova2

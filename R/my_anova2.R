@@ -22,7 +22,8 @@ my_anova2 = function(mods) {
   len = length(mods)
 
   # Get residual degrees of freedom (Res.Df) for each mod
-  res_dfs = sapply(mods, function(mod) mod$df.residual)
+  res_dfs = sapply(mods, function(mod)
+    mod$df.residual)
 
   # Calculate residual sums of squares (RSS) for each mod
   RSSs = sapply(mods, function(mod) sum(mod$residuals ^ 2))
@@ -51,20 +52,24 @@ my_anova2 = function(mods) {
   ps = pf(Fs, dfs, res_dfs[len], lower.tail = FALSE)
 
   # Create output
-  ret = list(Res.Df = res_dfs,
-             RSS = RSSs,
-             Df = dfs,
-             `Sum of Sq` = SSs,
-             `F` = Fs,
-             `Pr(>F)` = ps)
+  ret = list(
+    Res.Df = res_dfs,
+    RSS = RSSs,
+    Df = dfs,
+    `Sum of Sq` = SSs,
+    `F` = Fs,
+    `Pr(>F)` = ps
+  )
   attributes(ret)$class = c("anova", "data.frame")
   attributes(ret)$row.names = as.character(1:len)
   formula_strs = sapply(mods, function(mod) as.character(mod$call)[2])
-  attributes(ret)$heading = c("Analysis of Variance Table\n",
-                              paste0("Model ",
-                                     1:len,
-                                     ": ",
-                                     formula_strs,
-                                     collapse = "\n"))
+  attributes(ret)$heading = c(
+    "Analysis of Variance Table\n",
+    paste0("Model ",
+           1:len,
+           ": ",
+           formula_strs,
+           collapse = "\n")
+  )
   return(ret)
 }
