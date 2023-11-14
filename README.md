@@ -2,6 +2,7 @@
 # myANOVA
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/jdta95/myANOVA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jdta95/myANOVA/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The myANOVA package is designed to perform ANOVA analyses on linear regression models. The primary function is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
