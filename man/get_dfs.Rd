@@ -16,8 +16,8 @@ This function returns a numeric value indicating the degrees of freedom of a lin
 Calculates the degrees of freedom for a covariate in a linear regression model
 }
 \examples{
-data(mtcars)
-mod = lm(mpg ~ cyl + disp, data = mtcars)
-get_dfs(mod$model[["cyl"]])
+data(iris)
+mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
+get_dfs(mod$model[["Species"]])
 
 }

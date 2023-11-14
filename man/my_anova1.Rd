@@ -16,8 +16,8 @@ This function returns an object of class anova. These objects represent analysis
 Performs a sequential ANOVA analysis on one linear regression model.
 }
 \examples{
-data(mtcars)
-mod = lm(mpg ~ cyl + disp, data = mtcars)
+data(iris)
+mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
 my_anova1(mod)
 
 }

@@ -16,8 +16,8 @@ This function returns an object of class anova. These objects represent analysis
 Performs an ANOVA analysis on an intercept-only linear regression model.
 }
 \examples{
-data(mtcars)
-mod = lm(mpg ~ 1, data = mtcars)
+data(iris)
+mod = lm(Sepal.Length ~ 1, data = iris)
 my_anova_intercept(mod)
 
 }
