@@ -124,3 +124,32 @@ my_anova(mod1, mod2, mod3)
 Again, my_anova produces the same columns as when my_anova was used to compare 2 models. In addition, we can see the Res.Df, RSS, Df, and Sum of Sq in the first and second rows of the table are identical to what we saw in Part 1. This is because the same 2 models are being used to determine those values. However, the F-statistic and, subsequently, the p-value for Model 2 are different because part of the F-statistic calculation uses the RSS and residual degrees of freedom of the full model, which is now Model 3 instead of Model 2.
 
 Using the my_anova function, we can conclude adding the petal variables to the model with only sepal width significantly improved the fit of the model. In addition, Model 3 which added the species variable showed a significantly better fit compared to Model 2, which just considered sepal width and the petal variables.
+
+
+## Comparisons with anova function
+
+Below, we can see the output of my_anova matches the output of anova when it is used as intended.
+
+```{r}
+all.equal(my_anova(mod1), anova(mod1))
+all.equal(my_anova(mod2), anova(mod2))
+all.equal(my_anova(mod3), anova(mod3))
+all.equal(my_anova(mod1, mod2), anova(mod1, mod2))
+all.equal(my_anova(mod2, mod3), anova(mod2, mod3))
+all.equal(my_anova(mod1, mod3), anova(mod1, mod3))
+all.equal(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
+```
+
+In all of these cases, the my_anova output matches the anova output. We can also compare the efficiency of my_anova with anova.
+
+```{r}
+bench::mark(my_anova(mod1), anova(mod1))
+bench::mark(my_anova(mod2), anova(mod2))
+bench::mark(my_anova(mod3), anova(mod3))
+bench::mark(my_anova(mod1, mod2), anova(mod1, mod2))
+bench::mark(my_anova(mod2, mod3), anova(mod2, mod3))
+bench::mark(my_anova(mod1, mod3), anova(mod1, mod3))
+bench::mark(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
+```
+
+The my_anova function tends to be slower than anova when given just a single linear model but is actually faster than anova when given multiple nested linear models. However, even in the case of multiple nested linear models, anova is still superior in terms of its flexibility.

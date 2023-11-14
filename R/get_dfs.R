@@ -14,10 +14,13 @@
 #' @export
 
 get_dfs = function(col) {
+  # Get degrees of freedom (df) for categorical variables
+  ## df = number of groups - 1
   if (is.factor(col) | is.character(col)) {
-#  if (class(col) == "factor" | class(col) == "character") {
     df = length(unique(col)) - 1
   }
+  # Get df for numeric variables
+  ## df = 1
   else {
     df = 1
   }

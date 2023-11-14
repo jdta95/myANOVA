@@ -24,6 +24,8 @@ devtools::install_github("jdta95/myANOVA")
 
 There are 2 ways to use my_anova. When given one linear model object, my_anova sequentially tests significance of each term in the model. When given multiple nested linear model objects, my_anova compares and tests for significant differences between models.
 
+For a full breakdown of the output, please see the myANOVA vignette.
+
 ``` r
 library(myANOVA)
 

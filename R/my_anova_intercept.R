@@ -15,9 +15,18 @@
 
 my_anova_intercept = function(mod) {
   n = nrow(mod$model)
+
+  # Calculate degrees of freedom (df)
   df = n - 1
+
+  # Calculate sum of square residuals
+  ## SS = sum((Y - Ybar) ^ 2)
   SS = sum((mod$model[, 1] - mod$coefficients) ^ 2)
+
+  # Calculate mean sum of squares
   MSS = SS / df
+
+  # Create output
   ret = list(Df = df,
              `Sum Sq` = SS,
              `Mean Sq` = MSS,
