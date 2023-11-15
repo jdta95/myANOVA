@@ -24,7 +24,9 @@ The myANOVA package is designed to perform ANOVA analyses for linear regression 
 
 There are 2 ways to use my_anova. The first way sequentially tests significance of each term in one linear model. The second way compares and tests for significant differences between multiple nested linear models.
 
-Let's start with the first method.
+Be aware that my_anova makes valid comparisons for multiple nested linear interaction models, but it does not correctly perform an ANOVA analysis on just one linear interaction model. Thus, my_anova will return an error if only one linear interaction model is provided.
+
+Let's first take a look at what my_anova does when given a single linear model.
 
 
 ## my_anova for one linear model

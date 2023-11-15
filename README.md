@@ -6,7 +6,9 @@
 [![Codecov test coverage](https://codecov.io/gh/jdta95/myANOVA/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jdta95/myANOVA?branch=master)
 <!-- badges: end -->
 
-The myANOVA package is designed to perform ANOVA analyses on linear regression models. The primary function is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
+The myANOVA package is designed to perform ANOVA analyses primarily on main effect linear regression models. The primary function for doing this is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
+
+Note my_anova makes valid comparisons for multiple nested linear interaction models. However, it does not correctly perform an ANOVA analysis on just one linear interaction model. Thus, my_anova will return an error if only one linear interaction model is provided.
 
 
 ## Installation

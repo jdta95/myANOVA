@@ -30,6 +30,11 @@ my_anova = function(...) {
     return(my_anova2(mods))
   }
 
+  # Error if the only provided mod is a linear interaction model
+  else if (any(grepl(":", names(mods[[1]]$coefficients)))) {
+    stop("The my_anova function is not intended for sequential ANOVA analysis of linear interaction models")
+  }
+
   # If mods contains just one no-intercept model, run my_anova1_nointercept
   else if (length(mods) == 1 &
            (any(grepl(" -\\s*1", mods[[1]]$call)) |
