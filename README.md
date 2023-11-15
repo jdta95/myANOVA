@@ -8,8 +8,6 @@
 
 The myANOVA package is designed to perform ANOVA analyses on linear regression models. The primary function is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
 
-* The my_anova function is not intended for ANOVA analysis of a single cell-means coded linear model input. After searching online for answers, I could not determine how the anova function calculates sums of squares when given a single cell-means coded linear model.
-
 
 ## Installation
 

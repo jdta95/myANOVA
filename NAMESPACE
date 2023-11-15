@@ -3,6 +3,7 @@
 export(get_dfs)
 export(my_anova)
 export(my_anova1)
+export(my_anova1_nocoeffs)
 export(my_anova1_nointercept)
 export(my_anova2)
 export(my_anova_intercept)

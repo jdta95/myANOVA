@@ -25,16 +25,21 @@ my_anova = function(...) {
     stop("At least one of the objects supplied to my_anova does not have class \"lm\".")
   }
 
-  # Error if mods contains only one cell-means model
-  if (length(mods) == 1 &
-      (any(grepl(" -\\s*1", mods[[1]]$call)) |
-       any(grepl(" +\\s*0", mods[[1]]$call)))) {
-    return(my_anova1_nointercept(mods[[1]]))
-  }
-
   # If mods contains multiple models, run my_anova2
   else if (length(mods) > 1) {
     return(my_anova2(mods))
+  }
+
+  # If mods contains just one no-coefficient model, run my_anova1_nocoeffs
+  else if (ncol(mods[[1]]$model == 1)) {
+    return(my_anova1_nocoeffs(mods[[1]]))
+  }
+
+  # If mods contains just one no-intercept model, run my_anova1_nointercept
+  else if (length(mods) == 1 &
+           (any(grepl(" -\\s*1", mods[[1]]$call)) |
+            any(grepl(" +\\s*0", mods[[1]]$call)))) {
+    return(my_anova1_nointercept(mods[[1]]))
   }
 
   # If mods contains just one intercept-only model, run my_anova_intercept

@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Jonathan", "Ta", , "jdta@umich.edu", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: The myANOVA package is designed to perform ANOVA analyses on linear regression models. The primary function is the my_anova function. All other functions in this package are designed to be called in the my_anova function and are not intended for use on their own.
+Description: The myANOVA package is designed to perform ANOVA analyses on linear regression models using the my_anova function.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

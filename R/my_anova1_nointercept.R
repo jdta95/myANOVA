@@ -17,15 +17,22 @@
 
 my_anova1_nointercept = function(mod) {
   par = ncol(mod$model) - 1
+
+  # sum(Y ^ 2)
   Ysumsquare = sum(mod$model[, 1] ^ 2)
-  dfs = unname(c(sapply(mod$model[,-1, drop = FALSE], get_dfs), mod$df.residual))
+
+  # Use get_dfs on each covariate to get the degrees of freedom (df)
+  dfs = unname(c(sapply(mod$model[, -1, drop = FALSE], get_dfs), mod$df.residual))
   if (par > 1 | dfs[1] > 1) {
-    index = min(which(sapply(mod$model[,-1, drop = FALSE],
+    index = min(which(sapply(mod$model[, -1, drop = FALSE],
                              function(col) {
                                class(col) == "factor" | class(col) == "character"
                              })))
     dfs[index] = dfs[index] + 1
   }
+
+  # Calculate the sums of squares (SS) for each sequential model
+  ## SS = sum(Y ^ 2) - sum((Y - Yhat) ^ 2) - (previous SS's)
   SSs = numeric(par + 1)
   for (i in 1:par) {
     formula_str = paste0("mod$model[, 1] ~ - 1 + ",
@@ -35,9 +42,19 @@ my_anova1_nointercept = function(mod) {
   }
   SSs[i + 1] = sum(mod$residuals ^ 2)
 
+  # Calculate mean sums of squares
+  ## MSS = SS / df
   MSSs = SSs / dfs
+
+  # Calculate F-statistics
+  ## model MSS / residuals MSS
   Fs = c(MSSs[-length(MSSs)] / MSSs[length(MSSs)], NA)
+
+  # Calculate p-values
+  ## p = pf(F, model df, residual df)
   ps = pf(Fs, dfs[-length(dfs)], dfs[length(dfs)], lower.tail = FALSE)
+
+  # Create output
   ret = list(
     Df = dfs,
     `Sum Sq` = SSs,
