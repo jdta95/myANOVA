@@ -31,7 +31,7 @@ my_anova = function(...) {
   }
 
   # If mods contains just one no-coefficient model, run my_anova1_nocoeffs
-  else if (ncol(mods[[1]]$model == 1)) {
+  else if (ncol(mods[[1]]$model) == 1) {
     return(my_anova1_nocoeffs(mods[[1]]))
   }
 

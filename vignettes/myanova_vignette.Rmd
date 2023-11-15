@@ -28,6 +28,7 @@ Let's start with the first method.
 
 
 ## my_anova for one linear model
+### Part 1: intercept models
 
 Suppose we want to examine the significance of adding each variable to a linear regression model. We can perform this analysis using my_anova.
 
@@ -50,19 +51,60 @@ my_anova(mod)
 
 The function produces a table. At the top, we can see the response variable. To understand the rest of the information being provided, let's take a close look at each column.
 
-Df: This column contains the degrees of freedom for each variable. For a continuous numeric variable like Sepal.Width, the degrees of freedom will be 1. For a categorical variable like Species, the degrees of freedom is calculated as the number of categories minus 1. The degrees of freedom for the residuals is the number of observations minus 1 minus the parameters' degrees of freedom.
+\textbf{Df:} This column contains the degrees of freedom for each variable and for the residuals. Numeric variables have 1 degree of freedom. The degrees of freedom for categorical variables is the number of groups minus 1. The residual degrees of freedom is the number of observations minus the variable degrees of freedoms minus 1.
 
-Sum Sq: This column contains sums of squares. In each row, a linear regression model is run with the row name variable and all variables above it. To calculate the sum of squares, first the squared differences between the fitted values and the outcome mean are summed. Then the sum minus the prior sums of squares gives the sums of squares for the current row.
+\textbf{Sum Sq:} This column contains sums of squares. For each row, a linear regression model is run with the row name variable and all variables above it. Then, to calculate the sum of squares, first the squared differences between the fitted values and the outcome mean are summed. Finally, the sum minus the prior sums of squares gives the sums of squares for the current row.
 
-Mean Sq: This column is the mean sum of squares. It is the sum of squares divided by the degrees of freedom.
+\textbf{Mean Sq:} This column is the mean sum of squares. It is the sum of squares divided by the degrees of freedom.
 
-F value: This column is the F-statistic. These are calculated as the mean sum of squares for each variable divided by the mean sum of squares for the residuals.
+\textbf{F value:} This column is the F-statistic. These are calculated as the mean sum of squares for each variable divided by the mean sum of squares for the residuals.
 
-Pr(>F): This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom for each variable, the second is the degrees of freedom for the residuals.
+\textbf{Pr(>F):} This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom for each variable, the second is the degrees of freedom for the residuals.
 
 Going back to the original motivating analysis, we can use the p-values to conclude for each variable whether adding it to the previous model resulted in a significant improvement in fit.
 
 * It is important to remember that, when given one linear model, my_anova tests the significance of each variable sequentially. The first row's p-value indicates the significance of adding Sepal.Width to intercept-only linear model, the second row's p-value indicates the significance of adding Petal.Length to a linear model containing the intercept and Sepal.Width, and so on.
+
+
+### Part 2: no-intercept models
+
+We can do the same type of analysis for any no-intercept linear model.
+
+```{r}
+# Create a no-intercept linear model
+modni1 = lm(Sepal.Length ~
+              -1 + Sepal.Width + Petal.Length + Petal.Width + Species,
+            data = iris)
+
+my_anova(modni1)
+```
+
+The my_anova output contains the same columns as with an intercept model. However, the degrees of freedom and sums of squares are calculated differently.
+
+\textbf{Df:} For a no-intercept model, the first categorical variable in the linear model is cell-means coded instead of reference coded. Thus, the first categorical variable has degrees of freedom equal to the number of groups. In addition, the residual degrees of freedom is equal to the number of observations minus the degrees of freedom of the variables. All other degrees of freedom will be the same.
+
+\textbf{Sum of Sq:} Linear regression models are run for each row with the row name variable and all variables above it. Then, the function calculates the sum of the squared response variables minus the squared model residuals. Finally, the sum minus the prior sums of squares gives the sums of squares for the current row.
+
+
+### Part 3: no-intercept, no-coefficient models
+
+The my_anova function can also do an ANOVA analysis for a linear model with no intercept and no coefficients.
+
+```{r}
+# Create a no-intercept linear model
+modni0 = lm(Sepal.Length ~ -1,
+            data = iris)
+
+my_anova(modni0)
+```
+
+Again, the degrees of freedom and sum of squares are calculated differently.
+
+\textbf{Df:} The residual degrees of freedom is the number of observations.
+
+\textbf{Sum Sq:} The sum of squares is the sum of squared response values.
+
+Note that when this kind of linear model is provided to the my_anova function, the F value and Pr(>F) columns are still shown in the output, but there are no hypothesis tests being conducted.
 
 
 ## my_anova for multiple linear models
@@ -89,17 +131,17 @@ my_anova(mod1, mod2)
 
 Once again, my_anova returns a table. At the top, we can see the formulas for the models that are being compared. To understand the rest of the information, let's take a look at each column.
 
-Res. Df: This column contains the residual degrees of freedom for each model. The residual degrees of freedom is the number of observations minus 1 minus the degrees of freedom of the parameters in the model.
+\textbf{Res. Df:} This column contains the residual degrees of freedom for each model. The residual degrees of freedom is the number of observations minus 1 minus the degrees of freedom of the parameters in the model.
 
-RSS: This column shows the residual sum of squares. For each model, the residuals are squared and then summed to calculate the residual sum of squares
+\textbf{RSS:} This column shows the residual sum of squares. For each model, the residuals are squared and then summed to calculate the residual sum of squares
 
-Df: This column shows the degrees of freedom of the hypothesis test comparing each model to the reduced model immediately above it. The degrees of freedom is equal to the residual degrees of freedom of the reduced model minus the residual degrees of freedom of the full model.
+\textbf{Df:} This column shows the degrees of freedom of the hypothesis test comparing each model to the reduced model immediately above it. The degrees of freedom is equal to the residual degrees of freedom of the reduced model minus the residual degrees of freedom of the full model.
 
-Sum of Sq: This column contains sums of squares. These are calculated as the RSS of the reduced model minus the RSS of the full model.
+\textbf{Sum of Sq:} This column contains sums of squares. These are calculated as the RSS of the reduced model minus the RSS of the full model.
 
-F: This column shows the F-statistics. The F-statistic is the sum of squares value divided by the degrees of freedom of the hypothesis test.
+\textbf{F:} This column shows the F-statistics. The F-statistic is the sum of squares value divided by the degrees of freedom of the hypothesis test.
 
-Pr(>F): This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom of the hypothesis test, the second is the residual degrees of freedom for the full model.
+\textbf{Pr(>F):} This column contains the p-values of the F-statistic. Note the F-distribution has 2 parameters: the first is the degrees of freedom of the hypothesis test, the second is the residual degrees of freedom for the full model.
 
 Going back to the motivating scientific question, we can see from the my_anova table that the petal variables significantly improved the fit of the model compared to the model with just sepal length.
 
@@ -133,9 +175,12 @@ Below, we can see the output of my_anova matches the output of anova when it is 
 all.equal(my_anova(mod1), anova(mod1))
 all.equal(my_anova(mod2), anova(mod2))
 all.equal(my_anova(mod3), anova(mod3))
+all.equal(my_anova(modni0), anova(modni0))
+all.equal(my_anova(modni1), anova(modni1))
 all.equal(my_anova(mod1, mod2), anova(mod1, mod2))
 all.equal(my_anova(mod2, mod3), anova(mod2, mod3))
 all.equal(my_anova(mod1, mod3), anova(mod1, mod3))
+all.equal(my_anova(modni0, modni1), anova(modni0, modni1))
 all.equal(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
 ```
 
@@ -145,9 +190,12 @@ In all of these cases, the my_anova output matches the anova output. We can also
 bench::mark(my_anova(mod1), anova(mod1))
 bench::mark(my_anova(mod2), anova(mod2))
 bench::mark(my_anova(mod3), anova(mod3))
+bench::mark(my_anova(modni0), anova(modni0))
+bench::mark(my_anova(modni1), anova(modni1))
 bench::mark(my_anova(mod1, mod2), anova(mod1, mod2))
 bench::mark(my_anova(mod2, mod3), anova(mod2, mod3))
 bench::mark(my_anova(mod1, mod3), anova(mod1, mod3))
+bench::mark(my_anova(modni0, modni1), anova(modni0, modni1))
 bench::mark(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
 ```
 

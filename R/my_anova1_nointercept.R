@@ -26,7 +26,7 @@ my_anova1_nointercept = function(mod) {
   if (par > 1 | dfs[1] > 1) {
     index = min(which(sapply(mod$model[, -1, drop = FALSE],
                              function(col) {
-                               class(col) == "factor" | class(col) == "character"
+                               is.factor(col) | is.character(col)
                              })))
     dfs[index] = dfs[index] + 1
   }
