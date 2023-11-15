@@ -1,6 +1,6 @@
-#' my_anova1
+#' my_anova1_cellmeans
 #'
-#' Performs a sequential ANOVA analysis on one linear regression model.
+#' Performs a sequential ANOVA analysis on one no-intercept linear regression model.
 #'
 #' @param mod an "lm" object with at least one covariate in the linear regression model
 #'
@@ -10,43 +10,34 @@
 #'
 #' @examples
 #' data(iris)
-#' mod = lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data = iris)
-#' my_anova1(mod)
+#' mod = lm(Sepal.Length ~ -1 + Sepal.Width + Species, data = iris)
+#' my_anova1_cellmeans(mod)
 #'
 #' @export
 
-my_anova1 = function(mod) {
-  n = nrow(mod$model)
+my_anova1_cellmeans = function(mod) {
   par = ncol(mod$model) - 1
-  Ybar = mean(mod$model[, 1])
-
-  # Use get_dfs on each covariate to get the degrees of freedom (df)
-  dfs = unname(c(sapply(mod$model[, -1, drop = FALSE], get_dfs), mod$df.residual))
-
-  # Calculate the sums of squares (SS) for each sequential model
-  ## SS = sum((Yhat - Ybar) ^ 2) - (previous SS's)
+  Ysumsquare = sum(mod$model[, 1] ^ 2)
+  dfs = unname(c(sapply(mod$model[,-1, drop = FALSE], get_dfs), mod$df.residual))
+  if (par > 1 | dfs[1] > 1) {
+    index = min(which(sapply(mod$model[,-1, drop = FALSE],
+                             function(col) {
+                               class(col) == "factor" | class(col) == "character"
+                             })))
+    dfs[index] = dfs[index] + 1
+  }
   SSs = numeric(par + 1)
   for (i in 1:par) {
-    formula_str = paste0("mod$model[, 1] ~ ",
+    formula_str = paste0("mod$model[, 1] ~ - 1 + ",
                          paste0("mod$model[, ", 2:(i + 1), collapse = "] + "),
                          "]")
-    SSs[i] = sum((lm(as.formula(formula_str))$fitted.values - Ybar) ^ 2) - sum(SSs)
+    SSs[i] = Ysumsquare - sum((lm(as.formula(formula_str))$residuals) ^ 2) - sum(SSs)
   }
-  SSs[i + 1] = sum((mod$model[, 1] - mod$fitted.values) ^ 2)
+  SSs[i + 1] = sum(mod$residuals ^ 2)
 
-  # Calculate mean sums of squares
-  ## MSS = SS / df
   MSSs = SSs / dfs
-
-  # Calculate F-statistics
-  ## model MSS / residuals MSS
   Fs = c(MSSs[-length(MSSs)] / MSSs[length(MSSs)], NA)
-
-  # Calculate p-values
-  ## p = pf(F, model df, residual df)
   ps = pf(Fs, dfs[-length(dfs)], dfs[length(dfs)], lower.tail = FALSE)
-
-  # Create output
   ret = list(
     Df = dfs,
     `Sum Sq` = SSs,

@@ -27,9 +27,10 @@ my_anova = function(...) {
 
   # Error if mods contains only one cell-means model
   if (length(mods) == 1 &
-      (any(grepl(" -1", mods[[1]]$call)) |
-       any(grepl(" + 0", mods[[1]]$call))))
-    stop("A cell-means coded linear model cannot be the only object supplied to my_anova.")
+      (any(grepl(" -\\s*1", mods[[1]]$call)) |
+       any(grepl(" +\\s*0", mods[[1]]$call)))) {
+    return(my_anova1_cellmeans(mods))
+  }
 
   # If mods contains multiple models, run my_anova2
   if (length(mods) > 1) {
