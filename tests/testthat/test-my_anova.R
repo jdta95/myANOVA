@@ -33,6 +33,7 @@ test_that("my_anova works", {
   expect_equal(my_anova(mod0, mod1, mod2, mod3), anova(mod0, mod1, mod2, mod3))
   expect_equal(my_anova(modni0), anova(modni0))
   expect_equal(my_anova(modni1), anova(modni1))
+  expect_equal(my_anova(modni2), anova(modni2))
   expect_equal(my_anova(modni0, modni1), anova(modni0, modni1))
   expect_equal(my_anova(modni0, modni2), anova(modni0, modni2))
   expect_equal(my_anova(modni1, modni2), anova(modni1, modni2))
