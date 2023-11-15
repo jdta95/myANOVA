@@ -47,5 +47,5 @@ test_that("my_anova works", {
   expect_equal(my_anova(modint1, modint2), anova(modint1, modint2))
   expect_equal(my_anova(mod3, modint2), anova(mod3, modint2))
   expect_error(my_anova(modglm), "At least one of the objects supplied to my_anova does not have class \"lm\".")
-  expect_error(my_anova(modint1), "The my_anova function is not intended for ANOVA analysis of an individual linear interaction model")
+  expect_error(my_anova(modint1), "The my_anova function is not intended for ANOVA analysis of an individual linear interaction model.")
 })
