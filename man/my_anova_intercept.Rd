@@ -11,6 +11,8 @@ my_anova_intercept(mod)
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
+
+For a complete breakdown of the table output, please see the myANOVA vignette.
 }
 \description{
 Performs an ANOVA analysis on an intercept-only linear regression model.
