@@ -84,26 +84,7 @@ Df: For a no-intercept model, the first categorical variable in the linear model
 
 Sum of Sq: Linear regression models are run for each row with the row name variable and all variables above it. Then, the function calculates the sum of the squared response variables minus the squared model residuals. Finally, the sum minus the prior sums of squares gives the sums of squares for the current row.
 
-
-### Part 3: no-intercept, no-coefficient models
-
-The my_anova function can also do an ANOVA analysis for a linear model with no intercept and no coefficients.
-
-```{r}
-# Create a no-intercept linear model
-modni0 = lm(Sepal.Length ~ -1,
-            data = iris)
-
-my_anova(modni0)
-```
-
-Again, the degrees of freedom and sum of squares are calculated differently.
-
-Df: The residual degrees of freedom is the number of observations.
-
-Sum Sq: The sum of squares is the sum of squared response values.
-
-Note that when this kind of linear model is provided to the my_anova function, the F value and Pr(>F) columns are still shown in the output, but there are no hypothesis tests being conducted.
+The interpretations of the hypothesis tests are still the same as before.
 
 
 ## my_anova for multiple linear models
@@ -174,12 +155,10 @@ Below, we can see the output of my_anova matches the output of anova when it is 
 all.equal(my_anova(mod1), anova(mod1))
 all.equal(my_anova(mod2), anova(mod2))
 all.equal(my_anova(mod3), anova(mod3))
-all.equal(my_anova(modni0), anova(modni0))
 all.equal(my_anova(modni1), anova(modni1))
 all.equal(my_anova(mod1, mod2), anova(mod1, mod2))
 all.equal(my_anova(mod2, mod3), anova(mod2, mod3))
 all.equal(my_anova(mod1, mod3), anova(mod1, mod3))
-all.equal(my_anova(modni0, modni1), anova(modni0, modni1))
 all.equal(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
 ```
 
@@ -189,12 +168,10 @@ In all of these cases, the my_anova output matches the anova output. We can also
 bench::mark(my_anova(mod1), anova(mod1))
 bench::mark(my_anova(mod2), anova(mod2))
 bench::mark(my_anova(mod3), anova(mod3))
-bench::mark(my_anova(modni0), anova(modni0))
 bench::mark(my_anova(modni1), anova(modni1))
 bench::mark(my_anova(mod1, mod2), anova(mod1, mod2))
 bench::mark(my_anova(mod2, mod3), anova(mod2, mod3))
 bench::mark(my_anova(mod1, mod3), anova(mod1, mod3))
-bench::mark(my_anova(modni0, modni1), anova(modni0, modni1))
 bench::mark(my_anova(mod1, mod2, mod3), anova(mod1, mod2, mod3))
 ```
 

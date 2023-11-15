@@ -1,4 +1,4 @@
-#' my_anova_intercept
+#' my_anova1_interceptonly
 #'
 #' Performs an ANOVA analysis on an intercept-only linear regression model.
 #'
@@ -11,11 +11,11 @@
 #' @examples
 #' data(iris)
 #' mod = lm(Sepal.Length ~ 1, data = iris)
-#' my_anova_intercept(mod)
+#' my_anova1_interceptonly(mod)
 #'
 #' @export
 
-my_anova_intercept = function(mod) {
+my_anova1_interceptonly = function(mod) {
   n = nrow(mod$model)
 
   # Calculate degrees of freedom (df)

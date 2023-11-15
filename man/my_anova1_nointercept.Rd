@@ -7,7 +7,7 @@
 my_anova1_nointercept(mod)
 }
 \arguments{
-\item{mod}{an "lm" object with at least one covariate and no intercept in the linear regression model}
+\item{mod}{an "lm" object with no intercept in the linear model}
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
