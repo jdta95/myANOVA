@@ -1,8 +1,8 @@
 #' my_anova1
 #'
-#' Performs a sequential ANOVA analysis on one linear regression model.
+#' Performs a sequential ANOVA analysis on one linear regression model with an intercept, at least one covariate, and no interactions.
 #'
-#' @param mod an "lm" object with at least one covariate and an intercept in the linear regression model
+#' @param mod an "lm" object with at least one covariate, an intercept, and no interactions in the linear regression model
 #'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'

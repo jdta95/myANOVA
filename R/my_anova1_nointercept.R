@@ -1,8 +1,8 @@
 #' my_anova1_nointercept
 #'
-#' Performs a sequential ANOVA analysis on one no-intercept linear regression model.
+#' Performs a sequential ANOVA analysis on one no-intercept main effect linear regression model.
 #'
-#' @param mod an "lm" object with no intercept in the linear model
+#' @param mod an "lm" object with no intercept and no interactions in the linear model
 #'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'

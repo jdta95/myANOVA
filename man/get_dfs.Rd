@@ -10,7 +10,7 @@ get_dfs(col)
 \item{col}{column of the regression design matrix}
 }
 \value{
-This function returns a numeric value indicating the degrees of freedom of a linear regression covariate.
+This function returns a numeric value indicating the degrees of freedom of a linear regression covariate. Note this function assumes the linear model contains an intercept.
 }
 \description{
 Calculates the degrees of freedom for a covariate in a linear regression model

@@ -7,7 +7,7 @@
 my_anova1(mod)
 }
 \arguments{
-\item{mod}{an "lm" object with at least one covariate and an intercept in the linear regression model}
+\item{mod}{an "lm" object with at least one covariate, an intercept, and no interactions in the linear regression model}
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
@@ -15,7 +15,7 @@ This function returns an object of class anova. These objects represent analysis
 For a complete breakdown of the table output, please see the myANOVA vignette.
 }
 \description{
-Performs a sequential ANOVA analysis on one linear regression model.
+Performs a sequential ANOVA analysis on one linear regression model with an intercept, at least one covariate, and no interactions.
 }
 \examples{
 data(iris)

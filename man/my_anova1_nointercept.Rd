@@ -7,7 +7,7 @@
 my_anova1_nointercept(mod)
 }
 \arguments{
-\item{mod}{an "lm" object with no intercept in the linear model}
+\item{mod}{an "lm" object with no intercept and no interactions in the linear model}
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
@@ -15,7 +15,7 @@ This function returns an object of class anova. These objects represent analysis
 For a complete breakdown of the table output, please see the myANOVA vignette.
 }
 \description{
-Performs a sequential ANOVA analysis on one no-intercept linear regression model.
+Performs a sequential ANOVA analysis on one no-intercept main effect linear regression model.
 }
 \examples{
 data(iris)

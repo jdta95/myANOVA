@@ -4,7 +4,7 @@
 #'
 #' @param col column of the regression design matrix
 #'
-#' @return This function returns a numeric value indicating the degrees of freedom of a linear regression covariate.
+#' @return This function returns a numeric value indicating the degrees of freedom of a linear regression covariate. Note this function assumes the linear model contains an intercept.
 #'
 #' @examples
 #' data(iris)

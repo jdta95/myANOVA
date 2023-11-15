@@ -2,7 +2,7 @@
 #'
 #' Perform ANOVA analyses on one or more linear regression models
 #'
-#' @param ... one or more objects of class "lm"
+#' @param ... One or more comma separated objects of class "lm". If only one lm object is provided, it must be a main effect model, not an interaction model.
 #'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'
