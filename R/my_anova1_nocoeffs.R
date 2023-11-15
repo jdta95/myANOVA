@@ -1,8 +1,8 @@
 #' my_anova1_nocoeffs
 #'
-#' Performs an ANOVA analysis on one no-coefficient linear regression model.
+#' Performs an ANOVA analysis on one no-intercept, no-coefficient linear regression model.
 #'
-#' @param mod an "lm" object with at least one covariate in the linear regression model
+#' @param mod an "lm" object containing a linear regression model with no intercept and no coefficients
 #'
 #' @return This function returns an object of class anova. These objects represent analysis-of-variance tables.
 #'

@@ -31,7 +31,9 @@ my_anova = function(...) {
   }
 
   # If mods contains just one no-coefficient model, run my_anova1_nocoeffs
-  else if (ncol(mods[[1]]$model) == 1) {
+  else if (ncol(mods[[1]]$model) == 1 &
+           (any(grepl(" -\\s*1", mods[[1]]$call)) |
+            any(grepl(" +\\s*0", mods[[1]]$call)))) {
     return(my_anova1_nocoeffs(mods[[1]]))
   }
 

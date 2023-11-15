@@ -7,7 +7,7 @@
 my_anova1_nocoeffs(mod)
 }
 \arguments{
-\item{mod}{an "lm" object with at least one covariate in the linear regression model}
+\item{mod}{an "lm" object containing a linear regression model with no intercept and no coefficients}
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
@@ -15,7 +15,7 @@ This function returns an object of class anova. These objects represent analysis
 For a complete breakdown of the table output, please see the myANOVA vignette.
 }
 \description{
-Performs an ANOVA analysis on one no-coefficient linear regression model.
+Performs an ANOVA analysis on one no-intercept, no-coefficient linear regression model.
 }
 \examples{
 data(iris)

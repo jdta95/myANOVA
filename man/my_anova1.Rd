@@ -7,7 +7,7 @@
 my_anova1(mod)
 }
 \arguments{
-\item{mod}{an "lm" object with at least one covariate in the linear regression model}
+\item{mod}{an "lm" object with at least one covariate and an intercept in the linear regression model}
 }
 \value{
 This function returns an object of class anova. These objects represent analysis-of-variance tables.
