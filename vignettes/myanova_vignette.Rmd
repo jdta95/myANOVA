@@ -72,8 +72,7 @@ We can do the same type of analysis for any no-intercept linear model.
 
 ```{r}
 # Create a no-intercept linear model
-modni1 = lm(Sepal.Length ~
-              -1 + Sepal.Width + Petal.Length + Petal.Width + Species,
+modni1 = lm(Sepal.Length ~ -1 + Sepal.Width + Species,
             data = iris)
 
 my_anova(modni1)
