@@ -29,11 +29,11 @@ my_anova = function(...) {
   if (length(mods) == 1 &
       (any(grepl(" -\\s*1", mods[[1]]$call)) |
        any(grepl(" +\\s*0", mods[[1]]$call)))) {
-    return(my_anova1_nointercept(mods))
+    return(my_anova1_nointercept(mods[[1]]))
   }
 
   # If mods contains multiple models, run my_anova2
-  if (length(mods) > 1) {
+  else if (length(mods) > 1) {
     return(my_anova2(mods))
   }
 
