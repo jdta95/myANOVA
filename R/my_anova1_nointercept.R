@@ -1,4 +1,4 @@
-#' my_anova1_cellmeans
+#' my_anova1_nointercept
 #'
 #' Performs a sequential ANOVA analysis on one no-intercept linear regression model.
 #'
@@ -11,11 +11,11 @@
 #' @examples
 #' data(iris)
 #' mod = lm(Sepal.Length ~ -1 + Sepal.Width + Species, data = iris)
-#' my_anova1_cellmeans(mod)
+#' my_anova1_nointercept(mod)
 #'
 #' @export
 
-my_anova1_cellmeans = function(mod) {
+my_anova1_nointercept = function(mod) {
   par = ncol(mod$model) - 1
   Ysumsquare = sum(mod$model[, 1] ^ 2)
   dfs = unname(c(sapply(mod$model[,-1, drop = FALSE], get_dfs), mod$df.residual))
